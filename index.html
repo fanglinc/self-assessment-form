@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>公安信息化应用基础 - 学员能力自评表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a3a5c 0%, #2c5a7a 100%);
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "🎓";
+            position: absolute;
+            font-size: 180px;
+            opacity: 0.08;
+            bottom: -30px;
+            right: -30px;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 span {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 40px;
+            font-size: 18px;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+
+        .hero .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .hero .badge-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .hero .badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            backdrop-filter: blur(4px);
+        }
+
+        .instruction {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin-bottom: 28px;
+            border-left: 5px solid #2c5a7a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .instruction h3 {
+            color: #1a3a5c;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instruction p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .level-table {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            background: #f7f9fc;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .level-item {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .level-1 { background: #e8f0fe; color: #1a3a5c; }
+        .level-2 { background: #d4e6f1; color: #1a3a5c; }
+        .level-3 { background: #c8e6e0; color: #1a5c4a; }
+        .level-4 { background: #fef9e3; color: #b76e0e; }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .form-card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            background: #f8fafc;
+            padding: 18px 25px;
+            border-bottom: 2px solid #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            color: #1a3a5c;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-header h2 i {
+            font-size: 24px;
+        }
+
+        .toggle-icon {
+            color: #7f8c8d;
+            transition: transform 0.2s;
+        }
+
+        .card-body {
+            padding: 20px 25px;
+            display: block;
+        }
+
+        .card-body.collapsed {
+            display: none;
+        }
+
+        .competence-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .competence-table th {
+            background: #f1f5f9;
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 600;
+            color: #2d3748;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .competence-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #edf2f7;
+            vertical-align: middle;
+        }
+
+        .competence-table tr:hover {
+            background: #faf5ff;
+        }
+
+        .competence-table td:first-child {
+            font-weight: 500;
+            color: #2d3748;
+            width: 50%;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+
+        .radio-group label:hover {
+            background: #e2e8f0;
+        }
+
+        input[type="radio"] {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-field label {
+            font-weight: 600;
+            color: #2c5a7a;
+        }
+
+        .info-field input, .info-field select {
+            padding: 10px 14px;
+            border: 1px solid #cbd5e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .info-field input:focus, .info-field select:focus {
+            outline: none;
+            border-color: #2c5a7a;
+            box-shadow: 0 0 0 2px rgba(44, 90, 122, 0.2);
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .stats-badge {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 16px;
+            min-width: 100px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c5a7a;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #2c5a7a;
+            color: white;
+            box-shadow: 0 2px 8px rgba(44, 90, 122, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #1a3a5c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-success {
+            background: #2e7d64;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e5a48;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px 20px;
+            color: #7f8c8d;
+            font-size: 13px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .competence-table th, .competence-table td {
+                font-size: 12px;
+                padding: 10px 5px;
+            }
+            .radio-group {
+                gap: 6px;
+            }
+            .radio-group label {
+                font-size: 11px;
+                padding: 2px 5px;
+            }
+            .card-header h2 {
+                font-size: 18px;
+            }
+            .hero h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .btn-group, .toggle-icon, .summary-section .btn {
+                display: none;
+            }
+            .card-body {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🔍 公安信息化应用基础 <span>学员能力自评表</span></h1>
+        <div class="subtitle">恭喜各位：从小白到取证专业人士的进阶之路</div>
+        <div class="badge-group">
+            <span class="badge">🌐 网络基础</span>
+            <span class="badge">📄 网页取证</span>
+            <span class="badge">⚖️ 电子数据取证</span>
+            <span class="badge">🛡️ 公安信息化规范</span>
+        </div>
+    </div>
+
+    <div class="instruction">
+        <h3>📋 使用说明</h3>
+        <p>请根据你当前的真实水平，在每一项能力对应的方框中打“√”。这不是考试，而是帮助你看见自己的成长轨迹。<br>
+        课程开始前你可能还是“小白”，现在你已经掌握了很多实用技能——给自己一个肯定！</p>
+        <div class="level-table">
+            <div class="level-item level-1">🌱 初识<br><small>听说过，有点印象</small></div>
+            <div class="level-item level-2">🌿 理解<br><small>明白原理，能说出大概</small></div>
+            <div class="level-item level-3">🌳 应用<br><small>能独立完成操作</small></div>
+            <div class="level-item level-4">🏆 精通<br><small>能指导他人或解决复杂问题</small></div>
+        </div>
+    </div>
+
+    <form id="selfAssessmentForm">
+        <div class="info-section">
+            <h3 style="color:#1a3a5c; margin-bottom:10px;">👤 我的信息</h3>
+            <div class="info-grid">
+                <div class="info-field">
+                    <label>姓名</label>
+                    <input type="text" name="studentName" placeholder="请输入姓名" id="studentName">
+                </div>
+                <div class="info-field">
+                    <label>学号</label>
+                    <input type="text" name="studentId" placeholder="请输入学号" id="studentId">
+                </div>
+                <div class="info-field">
+                    <label>区队/班级</label>
+                    <select name="class" id="classSelect">
+                        <option value="">请选择</option>
+                        <option>刑事技术1区</option>
+                        <option>刑事技术2区</option>
+                        <option>刑事技术3区</option>
+                        <option>刑事技术4区</option>
+                        <option>刑事技术5区</option>
+                        <option>刑事技术6区</option>
+                    </select>
+                </div>
+                <div class="info-field">
+                    <label>填表日期</label>
+                    <input type="date" name="date" id="dateInput">
+                </div>
+            </div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="summary-section">
+            <h3>📊 我的成长统计</h3>
+            <div class="stats-badge">
+                <div class="stat-card"><div class="stat-number" id="totalCount">0</div><div class="stat-label">总项数</div></div>
+                <div class="stat-card"><div class="stat-number" id="advancedCount">0</div><div class="stat-label">🏆 精通</div></div>
+                <div class="stat-card"><div class="stat-number" id="appliedCount">0</div><div class="stat-label">🌳 应用</div></div>
+                <div class="stat-card"><div class="stat-number" id="understoodCount">0</div><div class="stat-label">🌿 理解</div></div>
+                <div class="stat-card"><div class="stat-number" id="beginnerCount">0</div><div class="stat-label">🌱 初识</div></div>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 重置</button>
+                <button type="button" class="btn btn-primary" onclick="updateStats()">📈 刷新统计</button>
+                <button type="button" class="btn btn-success" id="submitToApiBtn">📤 提交数据</button>
+            </div>
+            <p style="margin-top: 18px; font-size: 13px; color: #5a6e85;">✨ 点击“提交数据”后，您的自评结果将发送至教学分析平台。</p>
+        </div>
+
+        <div class="footer">
+            <p>© 公安信息化应用基础课程组 | 科技强警 · 未来可期</p>
+            <p style="font-size:12px">保存这份自评表，见证你的专业成长之路</p>
+        </div>
+    </form>
+</div>
+
+<script>
+    // ==================== 题库配置（无病毒/CIA/个保法等） ====================
+    const modules = [
+        {
+            title: "🌐 第一部分：计算机网络基础能力",
+            icon: "🌐",
+            items: [
+                "我能说出IP地址的作用和格式",
+                "我能区分IPv4和IPv6地址",
+                "我能说出MAC地址是什么，以及它和IP地址的区别",
+                "我能理解子网掩码的作用",
+                "我能说出默认网关是什么",
+                "我能理解DNS的作用（把网址转成IP）",
+                "我能区分公网IP和内网IP",
+                "我能说出DHCP的作用（自动分配IP）",
+                "我能理解什么是计算机网络协议",
+                "我能说出TCP/IP协议族的基本概念"
+            ]
+        },
+        {
+            title: "🔧 第二部分：网络命令与故障排查能力",
+            icon: "🔧",
+            items: [
+                "我能使用 ipconfig 命令查看本机IP配置",
+                "我能使用 ipconfig /all 查看MAC地址",
+                "我能使用 ping 命令测试网络连通性",
+                "我能通过 ping 的返回结果判断故障位置",
+                "我能使用 tracert 命令追踪网络路由路径",
+                "我能通过 tracert 结果定位网络中断点",
+                "我能使用 nslookup 命令查询域名解析",
+                "我能使用 arp -a 查看ARP缓存表",
+                "我能使用 netstat -an 查看网络连接状态",
+                "我能按照诊断流程排查常见网络故障"
+            ]
+        },
+        {
+            title: "📄 第三部分：网页取证能力",
+            icon: "📄",
+            items: [
+                "我能说出网页取证的法律意义和适用场景",
+                "我能说出网页取证需要记录哪些信息",
+                "我能理解为什么取证时要记录系统时间",
+                "我能理解Host文件的作用及篡改风险",
+                "我能使用录屏软件进行网页取证操作",
+                "我能规范地填写《网页取证报告》",
+                "我能验证网页内容是否被本地篡改",
+                "我能说出网页取证中“证据链”的含义",
+                "我能理解为什么要清理浏览器缓存",
+                "我能说出网页取证与普通截图的区别"
+            ]
+        },
+        {
+            title: "⚖️ 第四部分：电子数据取证基础能力",
+            icon: "⚖️",
+            items: [
+                "我能说出什么是电子数据取证",
+                "我能区分静态取证和动态取证",
+                "我能理解哈希值（Hash）的作用",
+                "我能计算文件的MD5或SHA-1值",
+                "我能理解为什么哈希值能验证文件完整性",
+                "我能说出电子数据取证的基本原则",
+                "我能理解“证据链”的含义和重要性",
+                "我能说出电子设备查封时封条的贴法要点",
+                "我能说出动态取证时录屏的注意事项",
+                "我能理解照片元数据（EXIF信息）的证据价值"
+            ]
+        },
+        {
+            title: "🛡️ 第五部分：公安信息化与网络安全规范能力",
+            icon: "🛡️",
+            items: [
+                "我能说出公安信息化的基本概念",
+                "我能说出公安专网的特点",
+                "我能说出“一机两用”的含义和严重后果",
+                "我能说出公安网络“四个严禁”的主要内容",
+                "我能理解为什么要对公安网进行安全隔离",
+                "我能说出警务数字证书的作用",
+                "我能理解什么是“最小权限原则”",
+                "我能识别日常工作中的信息安全风险",
+                "我能说出公安信息泄露的可能后果"
+            ]
+        },
+        {
+            title: "🚀 第六部分：综合应用与实战能力",
+            icon: "🚀",
+            items: [
+                "我能独立完成一份标准的《网页取证报告》",
+                "我能使用网络命令诊断常见的网络故障",
+                "我能识别小程序或网站的安全隐患",
+                "我能说出政务公开中保护个人隐私的方法",
+                "我能说出木马、蠕虫、勒索病毒的主要区别",
+                "我能说出遭遇勒索病毒后的应急处理步骤"
+            ]
+        }
+    ];
+
+    // 渲染题目
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        modules.forEach((module, mIdx) => {
+            const card = document.createElement('div');
+            card.className = 'form-card';
+            card.innerHTML = `
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h2><i>${module.icon}</i> ${module.title}</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="card-body">
+                    <table class="competence-table">
+                        <thead>
+                            <tr><th>能力描述</th><th style="width:70%">自我评价等级</th></tr>
+                        </thead>
+                        <tbody id="tbody-${mIdx}">
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.appendChild(card);
+            const tbody = document.getElementById(`tbody-${mIdx}`);
+            module.items.forEach((item, iIdx) => {
+                const row = tbody.insertRow();
+                row.insertCell(0).innerText = item;
+                const radioCell = row.insertCell(1);
+                const radioGroup = document.createElement('div');
+                radioGroup.className = 'radio-group';
+                const levels = ['beginner', 'understood', 'applied', 'advanced'];
+                const levelNames = ['🌱 初识', '🌿 理解', '🌳 应用', '🏆 精通'];
+                levels.forEach((level, lIdx) => {
+                    const radioId = `q_${mIdx}_${iIdx}_${level}`;
+                    const label = document.createElement('label');
+                    label.htmlFor = radioId;
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `q_${mIdx}_${iIdx}`;
+                    radio.value = level;
+                    radio.id = radioId;
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(levelNames[lIdx]));
+                    radioGroup.appendChild(label);
+                });
+                radioCell.appendChild(radioGroup);
+            });
+        });
+    }
+
+    // 折叠卡片
+    window.toggleCard = function(header) {
+        const body = header.nextElementSibling;
+        if (body) {
+            body.classList.toggle('collapsed');
+            const icon = header.querySelector('.toggle-icon');
+            if (icon) icon.style.transform = body.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
+        }
+    };
+
+    // 收集统计
+    function collectStats() {
+        let total = 0, advanced = 0, applied = 0, understood = 0, beginner = 0;
+        const allRadios = document.querySelectorAll('input[type="radio"]:checked');
+        allRadios.forEach(radio => {
+            total++;
+            const val = radio.value;
+            if (val === 'advanced') advanced++;
+            else if (val === 'applied') applied++;
+            else if (val === 'understood') understood++;
+            else if (val === 'beginner') beginner++;
+        });
+        let totalItems = 0;
+        modules.forEach(m => totalItems += m.items.length);
+        return { total: totalItems, checkedTotal: total, advanced, applied, understood, beginner };
+    }
+
+    function updateStats() {
+        const stats = collectStats();
+        document.getElementById('totalCount').innerText = stats.total;
+        document.getElementById('advancedCount').innerText = stats.advanced;
+        document.getElementById('appliedCount').innerText = stats.applied;
+        document.getElementById('understoodCount').innerText = stats.understood;
+        document.getElementById('beginnerCount').innerText = stats.beginner;
+        alert(`统计完成！\n总能力项：${stats.total}\n已自评：${stats.checkedTotal}\n🏆精通：${stats.advanced}  🌳应用：${stats.applied}  🌿理解：${stats.understood}  🌱初识：${stats.beginner}`);
+    }
+
+    function resetForm() {
+        if (confirm('确定要重置所有选项吗？')) {
+            const allRadios = document.querySelectorAll('input[type="radio"]');
+            allRadios.forEach(radio => radio.checked = false);
+            updateStats();
+        }
+    }
+
+    // 构建提交数据
+    function buildSubmissionData() {
+        const studentName = document.getElementById('studentName')?.value || '';
+        const studentId = document.getElementById('studentId')?.value || '';
+        const className = document.getElementById('classSelect')?.value || '';
+        const date = document.getElementById('dateInput')?.value || new Date().toISOString().slice(0,10);
+        
+        const answers = [];
+        modules.forEach((module, mIdx) => {
+            module.items.forEach((item, iIdx) => {
+                const selected = document.querySelector(`input[name="q_${mIdx}_${iIdx}"]:checked`);
+                answers.push({
+                    module: module.title,
+                    question: item,
+                    level: selected ? selected.value : 'unanswered',
+                    levelText: selected ? (selected.parentElement.innerText.trim()) : '未评价'
+                });
+            });
+        });
+        
+        const stats = collectStats();
+        return {
+            formType: '公安信息化应用基础-学员能力自评',
+            version: '2.0',
+            studentInfo: { name: studentName, id: studentId, class: className, date: date },
+            summary: {
+                totalItems: stats.total,
+                completed: stats.checkedTotal,
+                advanced: stats.advanced,
+                applied: stats.applied,
+                understood: stats.understood,
+                beginner: stats.beginner
+            },
+            details: answers,
+            timestamp: new Date().toISOString()
+        };
+    }
+
+    // POST 提交至 QuickForm 接口
+    async function submitToAPI() {
+        const submitBtn = document.getElementById('submitToApiBtn');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = '提交中...';
+        submitBtn.disabled = true;
+        
+        try {
+            const payload = buildSubmissionData();
+            // 校验是否有填写基本信息（至少姓名或学号，避免空提交）
+            if (!payload.studentInfo.name && !payload.studentInfo.id) {
+                alert('请至少填写姓名或学号，以便记录您的学习成长轨迹。');
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            const response = await fetch('https://quickform.cn/api/ec7lx34xzu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            
+            let resultMsg = '';
+            if (response.ok) {
+                const respData = await response.json().catch(() => ({}));
+                resultMsg = `✅ 提交成功！\n服务器响应：${JSON.stringify(respData).substring(0, 200)}`;
+                alert(resultMsg);
+                // 可考虑清空或给出完成提示
+            } else {
+                const errorText = await response.text().catch(() => '未知错误');
+                resultMsg = `❌ 提交失败 (HTTP ${response.status})\n${errorText.substring(0, 300)}`;
+                alert(resultMsg);
+            }
+        } catch (err) {
+            console.error('POST error:', err);
+            alert(`❌ 网络错误或接口异常：${err.message}\n请检查网络后重试。`);
+        } finally {
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        }
+    }
+
+    // 初始化日期
+    function setDefaultDate() {
+        const today = new Date().toISOString().slice(0,10);
+        if(document.getElementById('dateInput')) document.getElementById('dateInput').value = today;
+    }
+
+    renderQuestions();
+    setDefaultDate();
+    updateStats();
+
+    // 绑定提交事件
+    document.getElementById('submitToApiBtn').addEventListener('click', submitToAPI);
+</script>
+</body>
+</html>
